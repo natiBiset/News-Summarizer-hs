@@ -1,0 +1,154 @@
+<html>
+
+<h2>Description</h2>
+
+<p>Now that our preprocessed CNN/Daily Mail dataset is ready, we can fine-tune a BART model for news summarization. Fine-tuning is the process of taking a pre-trained language model (BART in this case) and further training it on a specific dataset tailored to our task. This allows the model to adapt its knowledge and learn the nuances of news summarization, ultimately leading to better performance.</p>
+
+<p>BART models come in different versions, such as &quot;BART-base&quot; and &quot;BART-large&quot;, which vary in size and complexity. In this project, we&#39;ll be using the &quot;BART-base&quot; version, which provides a good balance between performance and computational efficiency.</p>
+
+<p>We&#39;ll achieve this by feeding the model our processed news articles and their corresponding summaries. The model will learn to associate the input articles with the target summaries, adjusting its internal parameters to improve its ability to generate accurate and concise summaries.</p>
+
+<p>We&#39;ll use the Hugging Face Transformers library, which provides convenient access to pre-trained BART models and the tools needed for fine-tuning. This library makes the process smoother and more efficient.</p>
+
+<h2>Objective</h2>
+
+<p>Note that steps 1-3 are the same as in the first stage.</p>
+
+<ol>
+	<li>
+	<p><strong>Download and Load the Dataset:</strong> Use the datasets library from Hugging Face to download the CNN/Daily Mail dataset. You can load it like this:</p>
+
+	<pre>
+<code>from datasets import load_dataset
+dataset = load_dataset("cnn_dailymail","3.0.0")   </code></pre>
+
+	<p>where &quot;3.0.0&quot; refers to the version of the dataset.</p>
+	</li>
+	<li>
+	<p>Before proceeding with data preparation, take some time to explore the dataset. Check out some elements and the headers to understand the structure and content of the data.</p>
+	</li>
+	<li>
+	<p><strong>Prepare the Text:</strong> Write code to:</p>
+
+	<ul>
+		<li>
+		<p>Convert all text to lowercase. Use the <code>lower()</code> method in Python.</p>
+		</li>
+		<li>
+		<p>Remove any characters that are not letters, numbers, spaces, or basic punctuation (<code> &#39;.&#39;, &#39;,&#39;, &#39;?&#39;, &#39;!&#39;</code>). You can use regular expressions or other string manipulation techniques.</p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Load BART Model and Tokenizer:</strong> Import the necessary classes from the transformers library. Load the pre-trained BART model (e.g., &quot;facebook/bart-base&quot;) and its corresponding tokenizer.</p>
+
+	<pre>
+<code>from transformers import BartForConditionalGeneration, BartTokenizer
+
+model_name = "facebook/bart-base" 
+model = BartForConditionalGeneration.from_pretrained(model_name)
+tokenizer = BartTokenizer.from_pretrained(model_name)    </code></pre>
+	</li>
+	<li>
+	<p>Tokenize the cleaned <code>article</code> and <code>highlight</code> columns using the BART tokenizer. Ensure that the tokenizer separates articles and highlights appropriately, as the model expects distinct input and output sequences. Remember to use <code>as_target_tokenizer</code> for this purpose.</p>
+	</li>
+	<li>
+	<p>Divide the tokenized dataset into training, validation, and test sets using the default splits provided by the dataset. Use the variables <code>train_dataset</code>, <code>val_dataset</code>, and <code>test_dataset</code>.</p>
+	</li>
+	<li>
+	<p><strong>Create Data Collator:</strong> BART requires input data in a specific format. Create a function using the <code>DataCollatorForSeq2Seq</code> class from transformers to handle this, ensuring the input text and summaries are properly tokenized and padded.</p>
+	</li>
+	<li>
+	<p><strong>Prepare Training Arguments:</strong> Define the training parameters like batch size, number of epochs, learning rate, etc. Use the <code>TrainingArguments </code>class from <code>transformers</code> to manage these settings efficiently<br />
+	Print the training arguments details as follows:<br />
+	<code>print(&#39;training_args&#39;, training_args)</code></p>
+	</li>
+	<li>
+	<p><strong>Define the Trainer:</strong> The <code>Trainer</code> class from <code>transformers</code> simplifies the training process. Instantiate it with the BART model, training arguments, data collator, and the training and validation datasets.</p>
+	</li>
+	<li>
+	<p><strong>Fine-tune the Model:</strong> Start the training process using trainer.train(). The trainer will automatically handle the optimization and logging.<br />
+	<code>trainer.train()</code></p>
+	</li>
+	<li>
+	<p><strong>Save the Fine-tuned Model:</strong> Save the trained model and tokenizer using the <code>save_pretrained </code>method for later use, specifically naming them as <code>fine-tuned-bart</code>. Please maintain the default path for saving the model; do not alter it.</p>
+	</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p>Example 1:<br />
+Output:</p>
+
+<pre>
+<code class="language-no-highlight">training_args TrainingArguments(
+ output_dir='./results',
+ overwrite_output_dir=False,
+ do_train=True, do_eval=None,
+ do_predict=False,
+ evaluation_strategy=&lt;EvaluationStrategy.EPOCH: 'epoch'&gt;,
+ prediction_loss_only=False,
+ per_device_train_batch_size=8,
+ per_device_eval_batch_size=8,
+ gradient_accumulation_steps=1,
+ eval_accumulation_steps=None,
+ eval_delay=0,
+ learning_rate=2e-05,
+ weight_decay=0.01,
+ adam_beta1=0.9,
+ adam_beta2=0.999,
+ adam_epsilon=1e-08,
+ max_grad_norm=1.0,
+ num_train_epochs=3.0,
+ max_steps=-1,
+ lr_scheduler_type=&lt;SchedulerType.LINEAR: 'linear'&gt;,
+ warmup_ratio=0.0,
+ warmup_steps=0,
+ log_level=-1,
+ logging_dir='./logs',
+ logging_strategy=&lt;LoggingStrategy.STEPS: 'steps'&gt;,
+ logging_first_step=False,
+ logging_steps=500,
+ save_strategy=&lt;IntervalStrategy.STEPS: 'steps'&gt;,
+ save_steps=500,
+ save_total_limit=None,
+ seed=42,
+ fp16=False,
+ fp16_opt_level='O1',
+ local_rank=-1,
+ tpu_num_cores=None,
+ tpu_metrics_debug=False,
+ debug=False,
+ dataloader_drop_last=False,
+ eval_steps=None,
+ dataloader_num_workers=0,
+ past_index=-1,
+ run_name=None,
+ disable_tqdm=None,
+ remove_unused_columns=True,
+ label_names=None,
+ load_best_model_at_end=False,
+ metric_for_best_model=None,
+ greater_is_better=None,
+ ignore_data_skip=False,
+ sharded_ddp=False,
+ deepspeed=None,
+ label_smoothing_factor=0.0,
+ adafactor=False,
+ group_by_length=False,
+ report_to=['all'],
+ dataloader_pin_memory=True,
+ skip_memory_metrics=False,
+ push_to_hub=False,
+ resume_from_checkpoint=None,
+ _n_gpu=1, mp_parameters='',
+ auto_find_batch_size=False,
+ full_determinism=False,
+ torchdynamo=None,
+ ray_scope='last',
+ hf_deepspeed_config=None,
+ torch_compile=False,
+ torch_compile_backend=None,
+ torch_compile_mode=None )</code></pre>
+
+</html>

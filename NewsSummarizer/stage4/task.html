@@ -1,0 +1,57 @@
+<html>
+<p>[TITLE] Evaluating the Fine-tuned Model[/TITLE]</p>
+
+<h2>Description</h2>
+
+<p>The moment of truth has arrived! It's time to put our fine-tuned BART model to the test and see how well it performs on summarizing unseen news articles. In this stage, we'll evaluate the model's ability to generate accurate and concise summaries using the newly prepared news data.</p>
+
+<p>Evaluation is a crucial step in any machine learning project. It allows us to objectively assess how well our model generalizes to new data and identify areas where it might still fall short. But how do we actually evaluate text summaries? Human judgment, while valuable, can be subjective and time-consuming, especially for large datasets.</p>
+
+<p>That's where automated evaluation metrics come into play. One popular set of metrics for text summarization is called ROUGE (Recall-Oriented Understudy for Gisting Evaluation). ROUGE scores measure the overlap between the words and phrases present in our model-generated summaries and those found in human-written reference summaries. Higher ROUGE scores generally indicate better summary quality.</p>
+
+<p>In this stage, we'll use ROUGE scores to quantify how well our fine-tuned BART model performs. We'll compare the model's output summaries to the original articles' reference summaries, providing valuable insights into the model's strengths and potential areas for improvement.</p>
+
+<h2>Objective</h2>
+
+<ol>
+	<li>
+	<p><strong>Load Your Model and Data:</strong></p>
+
+	<ul>
+		<li>
+		<p>Begin by loading the fine-tuned BART model and tokenizer that you saved in Stage 2. This process is similar to loading the original model but with a different model name (<code>fine-tuned-bart</code>).</p>
+		</li>
+		<li>
+		<p>use the exact steps in stage 3 to load the news api data.</p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Generate Summaries:</strong></p>
+
+	<ul>
+		<li>
+		<p>Pass the news content to the tokenizer you just created. Adjust any additional parameters as needed for tokenization.</p>
+		</li>
+		<li>
+		<p>Utilize the <code>generate</code> method on the loaded BART model to generate a summary based on the tokenized input.</p>
+		</li>
+		<li>
+		<p>Decode the model's output, which is typically in numerical form, back into human-readable text using the <code>decode</code> method on the tokenizer.</p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p>Print out the new summary in the same way as shown in the Example section below.</p>
+	</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="language-no-highlight">SUMMARY: A leading tech company has launched NeuralGenie, an advanced AI system set to transform
+virtual assistants. With cutting-edge deep learning technology, NeuralGenie offers precise natural
+language understanding and personalized responses. Its impact spans healthcare, finance, and
+autonomous systems, heralding a new era of AI-driven innovation and user interaction.</code></pre>
+</html>

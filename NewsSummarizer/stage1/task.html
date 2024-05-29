@@ -1,0 +1,79 @@
+<html>
+<h2>Description</h2>
+
+<p>BART (Bidirectional and Auto-Regressive Transformers) is a powerful neural network architecture widely recognized for its effectiveness in natural language processing tasks, particularly text summarization. While BART models are pre-trained on a massive dataset of text and code, think of this pre-training as giving BART a broad understanding of language. To excel at a specific task like news summarization, fine-tuning is essential.</p>
+
+<p>It&#39;s like the difference between a multi-talented chef and one who specializes in a particular cuisine. The multi-talented chef can cook a variety of dishes reasonably well, but the specialized chef will create exceptional dishes within their niche. Fine-tuning BART on news data is like giving it that specialized culinary training, enabling it to generate much more accurate and relevant news summaries. And in the real world, we want those good summaries that accurately represent the original content, using important names and information.</p>
+
+<p>In this stage, we&#39;ll be using the CNN/Daily Mail dataset, a popular choice for news summarization. This dataset is readily available through Hugging Face Datasets. We&#39;ll leverage this to easily access the dataset and process it to make it ready for fine-tuning our BART model in the next stage.</p>
+
+<h2>Objective</h2>
+
+<ol>
+	<li>
+	<p><strong>Download and Load the Dataset:</strong> Use the datasets library from Hugging Face to download the CNN/Daily Mail dataset. You can load it like this:</p>
+
+	<pre>
+<code>from datasets import load_dataset
+dataset = load_dataset("cnn_dailymail","3.0.0")   </code></pre>
+
+	<p>where &quot;3.0.0&quot; refers to the version of the dataset.</p>
+	</li>
+	<li>
+	<p>Before proceeding with data preparation, take some time to explore the dataset. Check out some elements and the headers to understand the structure and content of the data.</p>
+	</li>
+	<li>
+	<p><strong>Prepare the Text:</strong> Write code to:</p>
+
+	<ul>
+		<li>
+		<p>Convert all text to lowercase. Use the <code>lower()</code> method in Python.</p>
+		</li>
+		<li>
+		<p>Remove any characters that are not letters, numbers, spaces, or basic punctuation (<code> &#39;.&#39;, &#39;,&#39;, &#39;?&#39;, &#39;!&#39;</code>). You can use regular expressions or other string manipulation techniques.</p>
+		</li>
+		<li>
+		<p>Perform this on both <code>article</code> as well as <code>highlight</code> column of the dataset.</p>
+		</li>
+	</ul>
+	</li>
+	<li>Print the first element of the cleaned dataset to ensure the preprocessing was done correctly.</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1:</strong><br />
+Output:</p>
+
+<pre>
+<code class="language-no-highlight">{'article': 'london, england reuters  harry potter star daniel radcliffe gains access to a reported
+20 million 41.1 million fortune as he turns 18 on monday, but he insists the money wont cast a spell
+on him. daniel radcliffe as harry potter in harry potter and the order of the phoenix to the
+disappointment of gossip columnists around the world, the young actor says he has no plans to
+fritter his cash away on fast cars, drink and celebrity parties. i dont plan to be one of those
+people who, as soon as they turn 18, suddenly buy themselves a massive sports car collection or
+something similar, he told an australian interviewer earlier this month. i dont think ill be
+particularly extravagant. the things i like buying are things that cost about 10 pounds  books and
+cds and dvds. at 18, radcliffe will be able to gamble in a casino, buy a drink in a pub or see the
+horror film hostel part ii, currently six places below his number one movie on the uk box office
+chart. details of how hell mark his landmark birthday are under wraps. his agent and publicist had
+no comment on his plans. ill definitely have some sort of party, he said in an interview. hopefully
+none of you will be reading about it. radcliffes earnings from the first five potter films have been
+held in a trust fund which he has not been able to touch. despite his growing fame and riches, the
+actor says he is keeping his feet firmly on the ground. people are always looking to say kid star
+goes off the rails, he told reporters last month. but i try very hard not to go that way because it
+would be too easy for them. his latest outing as the boy wizard in harry potter and the order of the
+phoenix is breaking records on both sides of the atlantic and he will reprise the role in the last
+two films.  watch ireporter give her review of potters latest  . there is life beyond potter,
+however. the londoner has filmed a tv movie called my boy jack, about author rudyard kipling and his
+son, due for release later this year. he will also appear in december boys, an australian film about
+four boys who escape an orphanage. earlier this year, he made his stage debut playing a tortured
+teenager in peter shaffers equus. meanwhile, he is braced for even closer media scrutiny now that
+hes legally an adult i just think im going to be more sort of fair game, he told reuters. email to a
+friend . copyright 2007 reuters. all rights reserved.this material may not be published, broadcast,
+rewritten, or redistributed.', 'highlights': 'harry potter star daniel radcliffe gets 20m fortune as
+he turns 18 monday .young actor says he has no plans to fritter his cash away .radcliffes earnings
+from first five potter films have been held in trust fund .', 'id':
+'42c027e4ff9730fbb3de84c1af0d2c506e41c3e4'}
+</code></pre>
+</html>

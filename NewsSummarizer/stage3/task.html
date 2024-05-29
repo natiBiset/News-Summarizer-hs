@@ -1,0 +1,106 @@
+<html>
+    <p>[TITLE] Preparing News Data for Evaluation[/TITLE]</p>
+
+<h2>Description</h2>
+
+<p>You must be excited to test your newly fine-tuned BART model! Before we can evaluate its performance, we need a fresh set of news articles that the model hasn't seen during training. This stage focuses on obtaining and preparing those new articles for evaluation.</p>
+
+<p>In practical applications, news summarization models constantly handle news from various sources. To simulate this, let's explore common ways to fetch news data in real-world projects:</p>
+
+<ul>
+	<li>
+	<p><strong>APIs (Application Programming Interfaces):</strong> APIs are the most common way to access news data programmatically. They provide structured data in formats like JSON or XML, making it easier to work with. Some popular news APIs include those from The New York Times, News API, and Guardian Open Platform. However, keep in mind that most news APIs often come with usage fees or subscription plans.</p>
+	</li>
+	<li>
+	<p><strong>Web Scraping:</strong> Web scraping involves extracting data directly from websites' HTML structure. It can be a powerful technique to gather data, but it also requires careful consideration of website structures, terms of service, and potential changes in website layouts. Web scraping for full news articles (as opposed to just headlines or summaries) can be particularly challenging, as it might involve navigating multiple pages or dealing with dynamic content loading.</p>
+	</li>
+</ul>
+
+<p>For this stage, you will be provided with JSON data containing news articles. This JSON data represents the output you might receive from news APIs. Your task is to process this data to prepare it for evaluating your fine-tuned BART model.</p>
+
+<h2>Objective</h2>
+
+<ol>
+	<li>
+	<p><strong>Load the JSON Data:</strong> You are provided with a JSON file called <code>news.json</code> containing news data. Use Python's json library to load this data into a suitable data structure like a list of dictionaries.</p>
+	</li>
+	<li>
+	<p><strong>Explore the Structure:</strong> Examine the loaded JSON data to understand how the news articles are organized. Identify the keys that correspond to the article titles, content, and any other metadata.</p>
+	</li>
+	<li>
+	<p><strong>Extract and Clean the Text:</strong></p>
+
+	<ul>
+		<li>
+		<p>Write code to iterate through your chosen data structure from step 1, extracting the text content of each news article.</p>
+		</li>
+		<li>
+		<p>Apply the same text preprocessing steps you used in Stage 1:</p>
+
+		<ul>
+			<li>
+			<p>Convert text to lowercase.</p>
+			</li>
+			<li>
+			<p>Remove any characters that are not letters, numbers, spaces, or basic punctuation ( '.', ',', '?', '!'). You can use regular expressions or other string manipulation techniques.</p>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Store the Processed Data:</strong> Store the processed news articles (titles and cleaned content) in a format that's convenient for loading and using in the next stage (evaluation). You could use lists, dictionaries, or even consider saving the data to a text file.</p>
+	</li>
+	<li>
+	<p><strong>Print Confirmation:</strong> Print out the title and the processed content of the article in the same way as shown in the Example section below.</p>
+	</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1:</strong><br>
+Input(JSON file):</p>
+
+<pre><code class="language-json">{
+    "articles": [
+        {
+            "title": "Tech Giant Launches New AI Product",
+            "content": "In a recent announcement, a leading tech company unveiled its latest AI
+product designed to revolutionize virtual assistants. The new AI system, named NeuralGenie, uses
+advanced deep learning algorithms to understand and respond to natural language queries with
+unprecedented accuracy. NeuralGenie is capable of learning from user interactions, adapting to
+individual preferences, and providing personalized recommendations. This development marks a
+significant milestone in AI technology and its applications across various industries. NeuralGenie's
+potential extends beyond virtual assistants, with applications in healthcare diagnostics, financial
+analysis, and autonomous driving systems. Experts predict that AI advancements like NeuralGenie will
+continue to shape the future of technology and enhance human-machine interactions. The launch of
+NeuralGenie has generated excitement and anticipation among tech enthusiasts, who eagerly await the
+next wave of AI innovations. With its ability to process vast amounts of data and make complex
+decisions, NeuralGenie is poised to revolutionize how businesses operate and interact with their
+customers. The integration of NeuralGenie into everyday technologies promises to streamline
+processes, improve efficiency, and enhance user experiences on a global scale.",
+            "source": "TechInsider",
+            "author": "John Doe",
+            "publishedAt": "2024-05-29T10:30:00Z"
+        }
+    ]
+}</code></pre>
+
+<p>output:</p>
+
+<pre><code class="language-no-highlight">TITLE: Tech Giant Launches New AI Product
+CONTENT: in a recent announcement, a leading tech company unveiled its latest ai product designed to
+revolutionize virtual assistants. the new ai system, named neuralgenie, uses advanced deep learning
+algorithms to understand and respond to natural language queries with unprecedented accuracy.
+neuralgenie is capable of learning from user interactions, adapting to individual preferences, and
+providing personalized recommendations. this development marks a significant milestone in ai
+technology and its applications across various industries. neuralgenie's potential extends beyond
+virtual assistants, with applications in healthcare diagnostics, financial analysis, and autonomous
+driving systems. experts predict that ai advancements like neuralgenie will continue to shape the
+future of technology and enhance humanmachine interactions. the launch of neuralgenie has generated
+excitement and anticipation among tech enthusiasts, who eagerly await the next wave of ai
+innovations. with its ability to process vast amounts of data and make complex decisions,
+neuralgenie is poised to revolutionize how businesses operate and interact with their customers. the
+integration of neuralgenie into everyday technologies promises to streamline processes, improve
+efficiency, and enhance user experiences on a global scale.</code></pre>
+</html>
